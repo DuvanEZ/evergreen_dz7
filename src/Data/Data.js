@@ -9,22 +9,6 @@ import {
 import { UilUsdSquare, UilMoneyWithdrawal } from "@iconscout/react-unicons";
 //import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
-//import fetch from "node-fetch";
-
-fetch('https://jsonplaceholder.typicode.com/todos')
-  .then((response) => response.json())
-  .then((json) => {
-    // Separate the values from the JSON response
-    const barValue = json[0].userId;
-    const id = json[0].id;
-    const title = json[0].title;
-    const completed = json[0].completed;
-    
-
-  })
-  .catch((error) => {
-    console.error('Error fetching data:', error);
-  });
 
 
 // Sidebar Data
@@ -42,62 +26,22 @@ export const SidebarData = [
 
 // Analytics Cards Data
 export let cardsData = [
-  {
-    title: "Sales",
-    color: {
-      backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
-      boxShadow: "0px 10px 20px 0px #e0c6f5",
-    },
-    barValue: 70,
-    value: "25,970",
-    png: UilUsdSquare,
-    series: [
-      {
-        name: "Sales",
-        data: [31, 40, 28, 51, 42, 109, 100],
-      },
-    ],
-  },
-  {
-    title: "Revenue",
-    color: {
-      backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
-      boxShadow: "0px 10px 20px 0px #FDC0C7",
-    },
-    barValue: 80,
-    value: "14,270",
-    png: UilMoneyWithdrawal,
-    series: [
-      {
-        name: "Revenue",
-        data: [10, 100, 50, 70, 80, 30, 40],
-      },
-    ],
-  },
-  {
-    title: "Expenses",
-    color: {
-      backGround:
-        "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
-      boxShadow: "0px 10px 20px 0px #F9D59B",
-    },
-    barValue: 60,
-    value: "4,270",
-    png: UilClipboardAlt,
-    series: [
-      {
-        name: "Expenses",
-        data: [10, 25, 15, 30, 12, 15, 20],
-      },
-    ],
-  },
+ 
 ];
 
-// Recent Update Card Data
+const url = 'https://9w9znugu7h.execute-api.us-east-1.amazonaws.com/v1/metrics';
+const options = {
+  method: 'POST',
+  body: JSON.stringify({ action: 'list' })
+};
 
-fetch("https://jsonplaceholder.typicode.com/todos")
+fetch("/v1/metrics",options)
   .then((response) => response.json())
-  .then((json) => {
+  .then(data => {
+    console.log(data); // imprimirá la respuesta en la consola
+    return data.payload.metrics.items;
+  })
+  .then((items) => {
     // Add new cardData object to the cardsData array for each object in the json response
     const newCardsData = [
       {
@@ -106,8 +50,8 @@ fetch("https://jsonplaceholder.typicode.com/todos")
           backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
           boxShadow: "0px 10px 20px 0px #e0c6f5",
         },
-        barValue : json[0].userId,
-        value : json[0].id,
+        barValue : items[0].porcentaje,
+        value : items[0].monto,
         
         png: UilUsdSquare,
         series: [
@@ -123,8 +67,8 @@ fetch("https://jsonplaceholder.typicode.com/todos")
           backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
           boxShadow: "0px 10px 20px 0px #FDC0C7",
         },
-        barValue : json[0].userId,
-        value : json[0].id,
+        barValue : items[1].porcentaje,
+        value : items[1].monto,
         png: UilMoneyWithdrawal,
         series: [
           {
@@ -140,8 +84,8 @@ fetch("https://jsonplaceholder.typicode.com/todos")
             "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
           boxShadow: "0px 10px 20px 0px #F9D59B",
         },
-        barValue: json[2].userId,
-        value: json[2].id,
+        barValue : items[2].porcentaje,
+        value : items[2].monto,
         png: UilClipboardAlt,
         series: [
           {

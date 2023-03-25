@@ -1,6 +1,5 @@
 {
   "name": "dashboard",
-  
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://9w9znugu7h.execute-api.us-east-1.amazonaws.com",
   "eslintConfig": {
     "extends": [
       "react-app",
