@@ -26,16 +26,90 @@ export const SidebarData = [
 
 // Analytics Cards Data
 export let cardsData = [
+  {
+    title: "Sales",
+    color: {
+      backGround: "linear-gradient(180deg, #bb67ff 0%, #c484f3 100%)",
+      boxShadow: "0px 10px 20px 0px #e0c6f5",
+    },
+    barValue : 25,
+    value : 500,
+    
+    png: UilUsdSquare,
+    series: [
+      {
+        name: "Sales",
+        data: [ 5,
+          10,
+          15,
+          20,
+          25,
+          30],
+      },
+    ],
+  },
+  {
+    title: "Revenue",
+    color: {
+      backGround: "linear-gradient(180deg, #FF919D 0%, #FC929D 100%)",
+      boxShadow: "0px 10px 20px 0px #FDC0C7",
+    },
+    barValue : 10,
+    value : 2000,
+    png: UilMoneyWithdrawal,
+    series: [
+      {
+        name: "Revenue",
+        data: [ 2,
+          4,
+          6,
+          8,
+          10,
+          12],
+      },
+    ],
+  },
+  {
+    title: "Expenses",
+    color: {
+      backGround:
+        "linear-gradient(rgb(248, 212, 154) -146.42%, rgb(255 202 113) -46.42%)",
+      boxShadow: "0px 10px 20px 0px #F9D59B",
+    },
+    barValue : 75,
+    value : 2500,
+    png: UilClipboardAlt,
+    series: [
+      {
+        name: "Expenses",
+        data: [ 8,
+          16,
+          24,
+          32,
+          40,
+          48],
+      },
+    ],
+  },
+  
  
 ];
 
-const url = 'https://9w9znugu7h.execute-api.us-east-1.amazonaws.com/v1/metrics';
+
+const apiKey = 'n0jXhcwvhf49j3mUJt7KZ5Lg9RTWnaPo6UkooiVr';
+
 const options = {
   method: 'POST',
-  body: JSON.stringify({ action: 'list' })
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': apiKey
+  },
+  body: JSON.stringify({
+    action: 'list'
+  })
 };
 
-fetch("/v1/metrics",options)
+fetch("/prod/metrics",options)
   .then((response) => response.json())
   .then(data => {
     console.log(data); // imprimirá la respuesta en la consola
@@ -57,7 +131,7 @@ fetch("/v1/metrics",options)
         series: [
           {
             name: "Sales",
-            data: [31, 40, 28, 51, 42, 109, 100],
+            data: items[0].arreglo,
           },
         ],
       },
@@ -73,7 +147,7 @@ fetch("/v1/metrics",options)
         series: [
           {
             name: "Revenue",
-            data: [10, 100, 50, 70, 80, 30, 40],
+            data: items[1].arreglo,
           },
         ],
       },
@@ -90,7 +164,7 @@ fetch("/v1/metrics",options)
         series: [
           {
             name: "Expenses",
-            data: [10, 25, 15, 30, 12, 15, 20],
+            data: items[2].arreglo,
           },
         ],
       },
